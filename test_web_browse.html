@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<body>
+<input type="file" id="dirInput" webkitdirectory directory multiple>
+<script>
+document.getElementById('dirInput').addEventListener('change', function(e) {
+    if(e.target.files.length > 0) {
+        // We get relative paths but on Chrome/Edge returning e.target.files[0].webkitRelativePath
+        console.log(e.target.files[0].path); // Electron/Tauri only
+    }
+});
+</script>
+</body>
+</html>

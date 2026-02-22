@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Files - File Organizer Pro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div class="background-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <!-- Top Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-brand">📁 File Organizer <span class="badge">Pro</span></div>
+        <ul class="nav-links">
+            <li><a href="/">Organization Rules</a></li>
+            <li><a href="/cleanup">Clean-up Tools</a></li>
+            <li><a href="/search" class="active">Find Files</a></li>
+        </ul>
+    </nav>
+
+    <div class="app-container">
+        <header>
+            <p class="subtitle">Quickly search your entire folder for absolutely any file by name.</p>
+        </header>
+
+        <main>
+            <!-- Target Directory Input Section -->
+            <section class="card input-section">
+                <h2>Target Search Directory</h2>
+                <div class="input-group">
+                    <input type="text" id="target-path" placeholder="Paste absolute path or click Browse..."
+                        value="/" />
+                    <button class="btn btn-secondary" id="btn-browse" onclick="triggerBrowsePython()"
+                        style="padding: 10px 15px; flex-shrink: 0;">
+                        🔍 Browse...
+                    </button>
+                </div>
+            </section>
+
+            <!-- Query Section -->
+            <div class="grid-layout" style="grid-template-columns: 1fr;">
+                <section class="card controls-section" style="padding: 20px;">
+                    <div class="input-group">
+                        <input type="text" id="search-query"
+                            placeholder="Type filename (e.g., invoice.pdf or *vacation*)"
+                            onkeydown="if(event.key==='Enter') triggerSearch()"
+                            style="background: rgba(15, 23, 42, 0.4); border-color: var(--color-accent); font-size: 1.1rem; padding: 16px;"
+                            autofocus />
+
+                        <button id="btn-search" class="btn btn-primary" onclick="triggerSearch()"
+                            style="padding: 16px 25px; font-size: 1.1rem;">
+                            🔎 Search
+                        </button>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Results Data Table -->
+            <section class="card results-section" style="padding: 0; overflow: hidden; display: none;"
+                id="search-results-card">
+                <div class="terminal-header" style="background: rgba(30, 41, 59, 1);">
+                    <span class="terminal-title" id="search-status" style="text-align: left; font-size: 0.95rem;">0
+                        matches found</span>
+                </div>
+
+                <div id="results-table-container">
+                    <table class="data-table" id="results-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 60%;">File Name & Path</th>
+                                <th style="width: 20%;">Size</th>
+                            </tr>
+                        </thead>
+                        <tbody id="results-body">
+                            <!-- JS populated rows -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+
+        <!-- Notification Toast -->
+        <div id="toast" class="toast hidden">
+            <span id="toast-icon"></span>
+            <span id="toast-message">Message goes here</span>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>

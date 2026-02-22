@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced File Organizer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div class="background-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <!-- Top Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-brand">📁 File Organizer <span class="badge">Pro</span></div>
+        <ul class="nav-links">
+            <li><a href="/" class="active">Organization Rules</a></li>
+            <li><a href="/cleanup">Clean-up Tools</a></li>
+            <li><a href="/search">Find Files</a></li>
+        </ul>
+    </nav>
+
+    <div class="app-container">
+        <header>
+            <div class="logo-icon">📁</div>
+            <h1>File Organizer <span class="badge">Pro</span></h1>
+            <p class="subtitle">Intelligent file management with a beautiful interface.</p>
+
+            <!-- System Storage Widget as a Semi-Circle Gauge -->
+            <div class="storage-widget">
+                <div class="storage-info">
+                    <span class="storage-title">Mac Disk Storage</span>
+                    <span class="storage-values" id="storage-text">Calculating...</span>
+                </div>
+                <div class="gauge-container">
+                    <svg viewBox="0 0 100 50" class="gauge">
+                        <path class="gauge-bg" d="M 10 50 A 40 40 0 0 1 90 50" fill="none" />
+                        <path class="gauge-fill" id="storage-bar" d="M 10 50 A 40 40 0 0 1 90 50" fill="none" />
+                    </svg>
+                    <div class="gauge-percentage" id="storage-percent">0%</div>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <!-- Target Directory Input Section -->
+            <section class="card input-section">
+                <h2>Target Directory</h2>
+                <div class="input-group">
+                    <input type="text" id="target-path" placeholder="Paste absolute path or click Browse..." />
+                    <button class="btn btn-secondary" id="btn-browse" onclick="triggerBrowsePython()"
+                        style="padding: 10px 15px; flex-shrink: 0;">
+                        🔍 Browse...
+                    </button>
+                </div>
+            </section>
+
+            <div class="grid-layout" style="grid-template-columns: 1fr;">
+                <!-- Organization Controls (Full Width Now) -->
+                <section class="card controls-section">
+                    <h2>Organization Rules</h2>
+
+                    <div class="radio-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <label class="radio-card">
+                            <input type="radio" name="org-method" value="type" checked>
+                            <span class="card-content">
+                                <span class="icon">📄</span>
+                                <span class="text">Group by File Type</span>
+                                <span class="hint">(Images, Docs, Music)</span>
+                            </span>
+                        </label>
+
+                        <label class="radio-card">
+                            <input type="radio" name="org-method" value="date">
+                            <span class="card-content">
+                                <span class="icon">📅</span>
+                                <span class="text">Group by Date</span>
+                                <span class="hint">(YYYY-MM Folders)</span>
+                            </span>
+                        </label>
+                    </div>
+
+                    <div class="primary-actions" style="grid-template-columns: 1fr 1fr;">
+                        <button id="btn-organize" class="btn btn-primary" onclick="triggerAction('organize')"
+                            style="padding: 16px; font-size: 1.1rem;">
+                            ✨ Organize Files
+                        </button>
+                        <button id="btn-undo" class="btn btn-secondary" onclick="triggerAction('undo')"
+                            style="padding: 16px; font-size: 1.1rem;">
+                            ↩️ Undo Last
+                        </button>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Terminal Log Window -->
+            <section class="card terminal-section">
+                <div class="terminal-header">
+                    <div class="window-controls">
+                        <span class="dot close"></span>
+                        <span class="dot min"></span>
+                        <span class="dot max"></span>
+                    </div>
+                    <span class="terminal-title">Activity Log</span>
+                </div>
+                <div class="terminal-body" id="log-console">
+                    <!-- Logs will be inserted here -->
+                </div>
+            </section>
+        </main>
+
+        <!-- Notification Toast -->
+        <div id="toast" class="toast hidden">
+            <span id="toast-icon"></span>
+            <span id="toast-message">Message goes here</span>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clean-up Tools - File Organizer Pro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div class="background-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <!-- Top Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-brand">📁 File Organizer <span class="badge">Pro</span></div>
+        <ul class="nav-links">
+            <li><a href="/">Organization Rules</a></li>
+            <li><a href="/cleanup" class="active">Clean-up Tools</a></li>
+            <li><a href="/search">Find Files</a></li>
+        </ul>
+    </nav>
+
+    <div class="app-container">
+        <header>
+            <p class="subtitle">Keep your computer tidy by removing unnecessary or duplicate files.</p>
+        </header>
+
+        <main>
+            <!-- Target Directory Input Section -->
+            <section class="card input-section">
+                <h2>Target Directory</h2>
+                <div class="input-group">
+                    <input type="text" id="target-path" placeholder="Paste absolute path or click Browse..." />
+                    <button class="btn btn-secondary" id="btn-browse" onclick="triggerBrowsePython()"
+                        style="padding: 10px 15px; flex-shrink: 0;">
+                        🔍 Browse...
+                    </button>
+                </div>
+            </section>
+
+            <div class="grid-layout">
+                <!-- Clean-up Tools -->
+                <section class="card tools-section" style="grid-column: span 2;">
+                    <h2>System Clean-up</h2>
+                    <p class="tool-desc">Select a target directory above to scan and clean.</p>
+
+                    <div class="tool-actions" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <button id="btn-duplicates" class="btn btn-primary" onclick="triggerAction('duplicates')"
+                            style="padding: 20px; font-size: 1.1rem;">
+                            🗑️ Remove Exact Duplicates
+                        </button>
+                        <button id="btn-empty" class="btn btn-primary" onclick="triggerAction('empty_folders')"
+                            style="padding: 20px; font-size: 1.1rem;">
+                            🧹 Delete Empty Folders
+                        </button>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Terminal Log Window -->
+            <section class="card terminal-section">
+                <div class="terminal-header">
+                    <div class="window-controls">
+                        <span class="dot close"></span>
+                        <span class="dot min"></span>
+                        <span class="dot max"></span>
+                    </div>
+                    <span class="terminal-title">Activity Log</span>
+                </div>
+                <div class="terminal-body" id="log-console">
+                    <!-- Logs will be inserted here -->
+                </div>
+            </section>
+        </main>
+
+        <!-- Notification Toast -->
+        <div id="toast" class="toast hidden">
+            <span id="toast-icon"></span>
+            <span id="toast-message">Message goes here</span>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>
