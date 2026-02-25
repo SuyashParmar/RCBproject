@@ -257,8 +257,42 @@ function getButtonId(action) {
 }
 
 /**
+ * Triggers the backend python AppleScript to open a native Folder Dialog.
+ */
+async function triggerBrowsePython() {
+    const btnId = arguments.length > 0 ? arguments[0] : 'btn-browse';
+    const btn = document.getElementById(btnId);
+
+    // Prevent double clicking
+    if (btn && btn.disabled) return;
+
+    const originalText = btn ? btn.innerHTML : "🔍 Browse...";
+    setButtonLoading(btn, true, originalText);
+
+    try {
+        const response = await fetch('/api/browse');
+        const data = await response.json();
+
+        if (response.ok && data.success && data.path) {
+            document.getElementById('target-path').value = data.path;
+            showToast("📁", "Folder selected successfully!");
+        } else if (response.ok && data.success && !data.path) {
+            // User just cancelled the dialog
+        } else {
+            showToast("⚠️", data.message || "Could not open folder browser.", true);
+        }
+    } catch (error) {
+        showToast("❌", "Failed to connect to Local Python Server.", true);
+        console.error("Browse API Error: ", error);
+    } finally {
+        setButtonLoading(btn, false, originalText);
+    }
+}
+
+/**
  * Utility for disabling a button and showing a spinner
  */
+
 function setButtonLoading(btn, isLoading, originalHTML = "") {
     if (!btn) return;
 
