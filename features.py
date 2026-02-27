@@ -72,7 +72,7 @@ def remove_empty_folders(path):
     return True
 
 def save_history(history_data):
-    """Saves organization history to allow undo."""
+    """Saves organization history to allow undo{updated}."""
     try:
         with open(HISTORY_FILE, "w", encoding="utf-8") as f:
             json.dump(history_data, f, indent=4)
